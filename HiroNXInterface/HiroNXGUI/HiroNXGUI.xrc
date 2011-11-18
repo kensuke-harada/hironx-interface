@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<resource xmlns="http://www.wxwindows.org/wxxrc" version="2.3.0.1">
+	<object class="wxFrame" name="MyFrame1">
+		<style>wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL</style>
+		<size>435,724</size>
+		<title>HiroNX GUI</title>
+		<object class="wxBoxSizer">
+			<orient>wxVERTICAL</orient>
+			<object class="sizeritem">
+				<option>0</option>
+				<flag>wxEXPAND | wxALL</flag>
+				<border>5</border>
+				<object class="wxPanel" name="m_panel6">
+					<style>wxTAB_TRAVERSAL</style>
+					<object class="wxBoxSizer">
+						<orient>wxHORIZONTAL</orient>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+							<border>5</border>
+							<object class="wxStaticText" name="m_staticText5">
+								<label>RTC Staus</label>
+							</object>
+						</object>
+						<object class="sizeritem">
+							<option>0</option>
+							<flag>wxALIGN_CENTER|wxALL|wxEXPAND</flag>
+							<border>5</border>
+							<object class="wxTextCtrl" name="m_rtc_status">
+								<style>wxTE_READONLY|wxRAISED_BORDER</style>
+								<value></value>
+								<maxlength>0</maxlength>
+							</object>
+						</object>
+					</object>
+				</object>
+			</object>
+			<object class="sizeritem">
+				<option>1</option>
+				<flag>wxEXPAND | wxALL</flag>
+				<border>5</border>
+				<object class="wxNotebook" name="m_notebook1">
+					<object class="notebookpage">
+						<label>システム</label>
+						<selected>1</selected>
+						<object class="wxPanel" name="m_system_tab">
+							<style>wxTAB_TRAVERSAL</style>
+							<object class="wxBoxSizer">
+								<orient>wxVERTICAL</orient>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_setupRobot">
+										<label>Set up Robot</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_calibrateJoint">
+										<label>Calibrate Joints</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_goInitial">
+										<label>Go Initial</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxEXPAND | wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticLine" name="m_staticline1">
+										<style>wxLI_HORIZONTAL</style>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxGridSizer">
+										<rows>3</rows>
+										<cols>3</cols>
+										<vgap>0</vgap>
+										<hgap>0</hgap>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+											<border>5</border>
+											<object class="wxStaticText" name="m_staticText2">
+												<label>Servo</label>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_servoOn">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>O N</label>
+												<default>0</default>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_servoOff">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>O F F</label>
+												<default>0</default>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+											<border>5</border>
+											<object class="wxStaticText" name="m_staticText21">
+												<label>Servo Hands</label>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_servoOnHands">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>O N</label>
+												<default>0</default>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_servoOffHands">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>O F F</label>
+												<default>0</default>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+											<border>5</border>
+											<object class="wxStaticText" name="m_staticText4">
+												<label>Protective Stop</label>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_EngageProtectiveStop">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>Engage</label>
+												<default>0</default>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<object class="wxButton" name="m_DisengageProtectiveStop">
+												<font>
+													<size>10</size>
+													<family>default</family>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<face>Standard Symbols L</face>
+												</font>
+												<label>Disengage</label>
+												<default>0</default>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxEXPAND | wxALL</flag>
+									<border>5</border>
+									<object class="wxStaticLine" name="m_staticline2">
+										<style>wxLI_HORIZONTAL</style>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxBoxSizer">
+										<orient>wxHORIZONTAL</orient>
+										<object class="sizeritem">
+											<option>1</option>
+											<flag>wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxBoxSizer">
+												<orient>wxVERTICAL</orient>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText51">
+														<label>Left Hand</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxBitmapButton" name="m_lhandOpen">
+														<style>wxBU_AUTODRAW</style>
+														<bitmap>lopen.png</bitmap>
+														<default>0</default>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxBitmapButton" name="m_lhandClose">
+														<style>wxBU_AUTODRAW</style>
+														<bitmap>lclose.png</bitmap>
+														<default>0</default>
+													</object>
+												</object>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>1</option>
+											<flag>wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxBoxSizer">
+												<orient>wxVERTICAL</orient>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText511">
+														<label>Right Hand</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxBitmapButton" name="m_rhandOpen">
+														<style>wxBU_AUTODRAW</style>
+														<bitmap>ropen.png</bitmap>
+														<default>0</default>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER|wxALL</flag>
+													<border>5</border>
+													<object class="wxBitmapButton" name="m_rhandClose">
+														<style>wxBU_AUTODRAW</style>
+														<bitmap>rclose.png</bitmap>
+														<default>0</default>
+													</object>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_goOffPose">
+										<label>Go Off Pose</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_shutdown">
+										<label>Shutdown</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_reboot">
+										<label>Reboot</label>
+										<default>0</default>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
+					<object class="notebookpage">
+						<label>関節操作</label>
+						<selected>0</selected>
+						<object class="wxPanel" name="m_joints_tab">
+							<style>wxTAB_TRAVERSAL</style>
+							<object class="wxBoxSizer">
+								<orient>wxVERTICAL</orient>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxEXPAND | wxALL</flag>
+									<border>5</border>
+									<object class="wxPanel" name="m_panel5">
+										<style>wxTAB_TRAVERSAL</style>
+										<object class="wxBoxSizer">
+											<orient>wxHORIZONTAL</orient>
+											<object class="sizeritem">
+												<option>1</option>
+												<flag>wxALL|wxEXPAND</flag>
+												<border>5</border>
+												<object class="wxButton" name="m_go">
+													<label>Go</label>
+													<default>0</default>
+												</object>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxSplitterWindow" name="m_splitter1">
+										<style>wxSP_3D|wxSP_BORDER|wxSP_LIVE_UPDATE</style>
+										<sashpos>300</sashpos>
+										<gravity>0</gravity>
+										<minsize>20</minsize>
+										<orientation>horizontal</orientation>
+										<object class="wxPanel" name="m_hands_panel">
+											<style>wxTAB_TRAVERSAL</style>
+											<object class="wxBoxSizer">
+												<orient>wxHORIZONTAL</orient>
+												<object class="sizeritem">
+													<option>1</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxScrolledWindow" name="m_left_joints_panel">
+														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
+														<object class="wxFlexGridSizer">
+															<rows>2</rows>
+															<cols>2</cols>
+															<vgap>0</vgap>
+															<hgap>0</hgap>
+															<growablecols>1</growablecols>
+															<growablerows></growablerows>
+														</object>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>1</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxScrolledWindow" name="m_right_joints_panel">
+														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
+														<object class="wxFlexGridSizer">
+															<rows>2</rows>
+															<cols>2</cols>
+															<vgap>0</vgap>
+															<hgap>0</hgap>
+															<growablecols>1</growablecols>
+															<growablerows></growablerows>
+														</object>
+													</object>
+												</object>
+											</object>
+										</object>
+										<object class="wxScrolledWindow" name="m_body_joints_panel">
+											<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
+											<object class="wxFlexGridSizer">
+												<rows>2</rows>
+												<cols>2</cols>
+												<vgap>0</vgap>
+												<hgap>0</hgap>
+												<growablecols>1</growablecols>
+												<growablerows></growablerows>
+											</object>
+										</object>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALIGN_RIGHT|wxALL</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_reset">
+										<label>リセット</label>
+										<default>0</default>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
+				</object>
+			</object>
+		</object>
+	</object>
+</resource>

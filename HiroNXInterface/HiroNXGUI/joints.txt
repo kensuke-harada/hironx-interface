@@ -1,0 +1,29 @@
+NY  首ヨー
+NP  首ピッチ
+BODY    胴体
+BASE    土台
+
+RSY 右肩ヨー
+RSP 右肩ピッチ
+REP 右肘ピッチ
+RWY 右手首ヨー
+RWP 右手首ピッチ
+RWR-00 右手首ロール
+---
+RWR-J0 右ハンドJ0
+RWR-J1 右ハンドJ1
+RWR-J2 右ハンドJ2
+RWR-J3 右ハンドJ3
+
+LSY 左肩ヨー
+LSP 左肩ピッチ
+LEP 左肘ピッチ
+LWY 左手首ヨー
+LWP 左手首ピッチ
+LWR-00 左手首ロール
+---
+LWR-J0 左ハンドJ0
+LWR-J1 左ハンドJ1
+LWR-J2 左ハンドJ2
+LWR-J3 左ハンドJ3
+
