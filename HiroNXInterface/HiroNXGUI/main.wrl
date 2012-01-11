@@ -800,8 +800,8 @@ DEF main_withHands Humanoid{
 				     jointId 12
 				     jointAxis 0.0 0.0 1.0 
 				     translation -0.030 0.0 0.0 
-				     ulimit [ 1.8325957145940461 ] #  105
-				     llimit [-2.8797932657906435 ] # -165
+				     ulimit [ 2.8797932657906435 ] #  165
+				     llimit [-1.8325957145940461 ] # -105
 				     uvlimit [ 2.6179938779914944 ] #  150
 				     lvlimit [-2.6179938779914944 ] # -150
 				     rotorInertia 0.5
