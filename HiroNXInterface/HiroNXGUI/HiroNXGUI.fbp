@@ -356,7 +356,7 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="1">
+                                <object class="wxBoxSizer" expanded="0">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer3</property>
                                     <property name="orient">wxVERTICAL</property>
@@ -2042,7 +2042,7 @@
                                                                 <event name="OnSize"></event>
                                                                 <event name="OnUpdateUI"></event>
                                                                 <object class="wxFlexGridSizer" expanded="1">
-                                                                    <property name="cols">2</property>
+                                                                    <property name="cols">4</property>
                                                                     <property name="flexible_direction">wxBOTH</property>
                                                                     <property name="growablecols">1</property>
                                                                     <property name="growablerows"></property>
@@ -2109,7 +2109,7 @@
                                                                 <event name="OnSize"></event>
                                                                 <event name="OnUpdateUI"></event>
                                                                 <object class="wxFlexGridSizer" expanded="1">
-                                                                    <property name="cols">2</property>
+                                                                    <property name="cols">4</property>
                                                                     <property name="flexible_direction">wxBOTH</property>
                                                                     <property name="growablecols">1</property>
                                                                     <property name="growablerows"></property>
@@ -2176,7 +2176,7 @@
                                                     <event name="OnSize"></event>
                                                     <event name="OnUpdateUI"></event>
                                                     <object class="wxFlexGridSizer" expanded="1">
-                                                        <property name="cols">2</property>
+                                                        <property name="cols">4</property>
                                                         <property name="flexible_direction">wxBOTH</property>
                                                         <property name="growablecols">1</property>
                                                         <property name="growablerows"></property>

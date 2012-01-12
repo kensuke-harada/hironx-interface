@@ -7,6 +7,7 @@ from wx import xrc
 import os
 import sys
 import re
+import string
 import OpenRTM_aist
 
 import WxHelper
@@ -14,18 +15,61 @@ import HiroNXGUI
 from Joint import Joint 
 import bodyinfo 
 
-def SliderToText(event):
-    slider = event.EventObject 
-    name = slider.Name.replace('m_slider_', 'm_text_')
-    text = slider.Parent.FindWindowByName(name)
-    text.Value = "%d" % event.Int
-    
-def TextToSlider(event):
-    text = event.EventObject 
-    name = text.Name.replace('m_text_', 'm_slider_')
-    slider = text.Parent.FindWindowByName(name)
-    slider.Value = int(event.String)
+class JointValidator(wx.PyValidator):
+    def __init__(self, pyVar=None):
+        wx.PyValidator.__init__(self)
+        self.Bind(wx.EVT_CHAR, self.OnChar)
 
+    def getMax(self):
+        return self._max;
+    
+    def setMax(self, max):
+        self._max = max;
+    
+    Max = property(getMax, setMax)
+        
+    def getMin(self):
+        return self._min;
+    
+    def setMin(self, min):
+        self._min = min;
+
+    Min = property(getMin, setMin)
+        
+    def getInitial(self):
+        return self._initial;
+    
+    def setInitial(self, initial):
+        self._initial = initial;
+
+    Initial = property(getInitial, setInitial)
+        
+    def Clone(self):
+        return JointValidator()
+
+    def OnChar(self, event):
+        validsyms = '-.'
+        validchars = string.digits + validsyms
+        key = event.GetKeyCode()
+        if key < wx.WXK_SPACE or key == wx.WXK_DELETE or key > 255:
+            event.Skip()
+            return
+        ck = chr(key)
+        if ck in validchars:
+            tc = self.GetWindow()
+            if ck in validsyms:
+                event.Skip()
+                return                
+            val = float(tc.GetValue()+ck)
+            if self._min <= val and val <= self._max:
+                event.Skip()
+                return
+        if not wx.Validator_IsSilent():
+            wx.Bell()
+        return
+    
+    
+    
 class MyApp(wx.App):
     def OnInit(self):
         path = os.path.dirname(__file__)
@@ -41,9 +85,9 @@ class MyApp(wx.App):
         
         self.res = xrc.XmlResource(self.XmlResourceFile)
         self.document = xrc.XmlDocument(self.XmlResourceFile, 'utf-8')
+        self.settings = WxHelper.LoadSettings(self.SettingsFile)
         self.init_frame()
         
-        self.settings = WxHelper.LoadSettings(self.SettingsFile)
         if 'ClientRect' in self.settings:
             self.frame.SetRect(self.settings['ClientRect'])
         
@@ -86,7 +130,8 @@ class MyApp(wx.App):
                   'N': m_body_joints_panel,}
         self.InitJointsPanel(joints, panels)
         m_hands_panel.Fit()
-        m_splitter1.SetSashPosition(600)
+        sashpos = self.settings.get('SashPos') or 400
+        m_splitter1.SetSashPosition(sashpos)
         m_splitter1.Refresh()
         m_splitter1.UpdateSize()
         
@@ -125,7 +170,7 @@ class MyApp(wx.App):
                 jointsDic[code] = name
         return [jointsDic, joints]
     
-    # 関節リストをもとに、関節操作タブにスライダーとテキストコントロールを配置
+    # 関節リストをもとに、関節操作タブにテキストコントロールを配置
     # 関節コードの頭文字によって、配置するパネルを切り替える。
     # joints: 関節リスト
     # panels: 頭文字とパネルのマップ
@@ -135,7 +180,7 @@ class MyApp(wx.App):
             if code.find('---') == 0 and last_panel:
                 sizer = last_panel.Sizer
                 sizer.Rows = sizer.Rows + 1
-                for i in range(2):
+                for i in range(4):
                     line = wx.StaticText(last_panel, -1)
                     line.Label = ' '
                     sizer.Add(line)
@@ -151,13 +196,18 @@ class MyApp(wx.App):
             joint = joints[code]
             name = 'm_slider_%s' % code
             #print jointsDic[code], code, name
-            slider = m_splitter1.FindWindowByName(name)
+            #slider = m_splitter1.FindWindowByName(name)
             text = m_splitter1.FindWindowByName('m_text_%s' % code)
-            if slider:
-                slider.Min = joint._llimit
-                slider.Max = joint._ulimit
-                slider.Value = joint._initial
-                text.Value = str(slider.Value)
+            validator = text.Validator
+            if validator:
+                validator.Min = joint._llimit
+                validator.Max = joint._ulimit
+                validator.Initial = joint._initial
+                text.Value = str(validator.Initial)
+                label =  m_splitter1.FindWindowByName('m_min_%s' % code)
+                label.Label = '%d ≦ '%validator.Min
+                label =  m_splitter1.FindWindowByName('m_max_%s' % code)
+                label.Label = ' ≦ %d'%validator.Max
 
     # 関節操作パネル（関節名、スライダー、テキスト）を追加
     # parent: 親パネル
@@ -168,19 +218,23 @@ class MyApp(wx.App):
         sizer = parent.Sizer
         label = wx.StaticText(parent)
         label.Label = self._jointsDic[code]
-        slider = wx.Slider(parent, -1, 180, 0, 359, wx.DefaultPosition, wx.DefaultSize, 
-                           wx.SL_LABELS, wx.DefaultValidator, "m_slider_%s" % code)
         textCtrlName = "m_text_%s"%code
-        textCtrl = wx.TextCtrl(parent, -1, "%d"%slider.Value, wx.DefaultPosition, wx.DefaultSize, 
-                           0, wx.DefaultValidator, textCtrlName)
-        slider.Bind(wx.EVT_SLIDER, SliderToText)
-        textCtrl.Bind(wx.EVT_TEXT, TextToSlider)
+        validator = JointValidator()
+        minLabel = wx.StaticText(parent)
+        minLabel.Name = "m_min_%s"%code
+        maxLabel = wx.StaticText(parent)
+        maxLabel.Name = "m_max_%s"%code
+        textCtrl = wx.TextCtrl(parent, -1, "0", wx.DefaultPosition, wx.DefaultSize, 
+                           0, validator, textCtrlName)
+        #textCtrl.Bind(wx.EVT_TEXT, CheckValue)
 
-        vsizer = wx.BoxSizer(wx.VERTICAL)
-        vsizer.Add(label, 0, wx.ALIGN_CENTER_VERTICAL)
-        vsizer.Add(textCtrl, 0, wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(vsizer, 0)
-        sizer.Add(slider, 1, wx.EXPAND)
+        #vsizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(label, 0, wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(minLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT)
+        sizer.Add(textCtrl, 0, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        sizer.Add(maxLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_LEFT)
+        #sizer.Add(vsizer, 0)
+        #sizer.Add(slider, 1, wx.EXPAND)
         
     def OnMenuQuit(self, event):
         self.frame.Close()
@@ -192,6 +246,8 @@ class MyApp(wx.App):
             return_id = self.rtc._motion._ptr().movePTPJointAbs(points)
             print return_id
         else:
+            points = self.sliderValueList()
+            print points
             print 'RTC not connected.'
 
     # スライダーの値のリストを返す。 
@@ -211,7 +267,7 @@ class MyApp(wx.App):
         self.sliderList = []
         for list in Joint.body_codes:
             for code in list:
-                name = "m_slider_%s" % code
+                name = "m_text_%s" % code
                 slider = m_splitter1.FindWindowByName(name)
                 self.sliderList.append(slider)
         return self.sliderList
@@ -228,6 +284,8 @@ class MyApp(wx.App):
     
     def OnClose(self, event):
         self.settings['ClientRect'] = self.frame.GetRect()
+        m_splitter1 = xrc.XRCCTRL(self.frame,'m_splitter1')
+        self.settings['SashPos'] = m_splitter1.GetSashPosition()
         WxHelper.SaveSettings(self.SettingsFile, self.settings)
         self.frame.Destroy()
         self.ExitMainLoop()

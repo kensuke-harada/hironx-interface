@@ -386,7 +386,7 @@
 														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 														<object class="wxFlexGridSizer">
 															<rows>2</rows>
-															<cols>2</cols>
+															<cols>4</cols>
 															<vgap>0</vgap>
 															<hgap>0</hgap>
 															<growablecols>1</growablecols>
@@ -402,7 +402,7 @@
 														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 														<object class="wxFlexGridSizer">
 															<rows>2</rows>
-															<cols>2</cols>
+															<cols>4</cols>
 															<vgap>0</vgap>
 															<hgap>0</hgap>
 															<growablecols>1</growablecols>
@@ -416,7 +416,7 @@
 											<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 											<object class="wxFlexGridSizer">
 												<rows>2</rows>
-												<cols>2</cols>
+												<cols>4</cols>
 												<vgap>0</vgap>
 												<hgap>0</hgap>
 												<growablecols>1</growablecols>
