@@ -255,7 +255,7 @@ class MyApp(wx.App):
     def sliderValueList(self):
         points = []
         for s in self.sliders():
-            points.append(s.Value)
+            points.append(float(s.Value))
         return points
     
     # スライダーコントロールのリストを返す。
