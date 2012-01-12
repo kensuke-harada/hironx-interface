@@ -198,16 +198,17 @@ class MyApp(wx.App):
             #print jointsDic[code], code, name
             #slider = m_splitter1.FindWindowByName(name)
             text = m_splitter1.FindWindowByName('m_text_%s' % code)
-            validator = text.Validator
-            if validator:
-                validator.Min = joint._llimit
-                validator.Max = joint._ulimit
-                validator.Initial = joint._initial
-                text.Value = str(validator.Initial)
-                label =  m_splitter1.FindWindowByName('m_min_%s' % code)
-                label.Label = '%d ≦ '%validator.Min
-                label =  m_splitter1.FindWindowByName('m_max_%s' % code)
-                label.Label = ' ≦ %d'%validator.Max
+            if text:
+                validator = text.Validator
+                if validator:
+                    validator.Min = joint._llimit
+                    validator.Max = joint._ulimit
+                    validator.Initial = joint._initial
+                    text.Value = str(validator.Initial)
+                    label =  m_splitter1.FindWindowByName('m_min_%s' % code)
+                    label.Label = '%d ≦ '%validator.Min
+                    label =  m_splitter1.FindWindowByName('m_max_%s' % code)
+                    label.Label = ' ≦ %d'%validator.Max
 
     # 関節操作パネル（関節名、スライダー、テキスト）を追加
     # parent: 親パネル

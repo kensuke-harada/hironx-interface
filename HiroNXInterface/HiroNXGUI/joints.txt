@@ -1,7 +1,6 @@
+BODY    胴体
 NY  首ヨー
 NP  首ピッチ
-BODY    胴体
-BASE    土台
 
 RSY 右肩ヨー
 RSP 右肩ピッチ
