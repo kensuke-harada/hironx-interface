@@ -352,15 +352,6 @@
 										<style>wxTAB_TRAVERSAL</style>
 										<object class="wxBoxSizer">
 											<orient>wxHORIZONTAL</orient>
-											<object class="sizeritem">
-												<option>1</option>
-												<flag>wxALL|wxEXPAND</flag>
-												<border>5</border>
-												<object class="wxButton" name="m_go">
-													<label>Go</label>
-													<default>0</default>
-												</object>
-											</object>
 										</object>
 									</object>
 								</object>
@@ -370,10 +361,21 @@
 									<border>5</border>
 									<object class="wxSplitterWindow" name="m_splitter1">
 										<style>wxSP_3D|wxSP_BORDER|wxSP_LIVE_UPDATE</style>
-										<sashpos>300</sashpos>
+										<sashpos>150</sashpos>
 										<gravity>0</gravity>
 										<minsize>20</minsize>
 										<orientation>horizontal</orientation>
+										<object class="wxScrolledWindow" name="m_body_joints_panel">
+											<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
+											<object class="wxFlexGridSizer">
+												<rows>2</rows>
+												<cols>4</cols>
+												<vgap>0</vgap>
+												<hgap>0</hgap>
+												<growablecols>1</growablecols>
+												<growablerows></growablerows>
+											</object>
+										</object>
 										<object class="wxPanel" name="m_hands_panel">
 											<style>wxTAB_TRAVERSAL</style>
 											<object class="wxBoxSizer">
@@ -412,25 +414,23 @@
 												</object>
 											</object>
 										</object>
-										<object class="wxScrolledWindow" name="m_body_joints_panel">
-											<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
-											<object class="wxFlexGridSizer">
-												<rows>2</rows>
-												<cols>4</cols>
-												<vgap>0</vgap>
-												<hgap>0</hgap>
-												<growablecols>1</growablecols>
-												<growablerows></growablerows>
-											</object>
-										</object>
 									</object>
 								</object>
 								<object class="sizeritem">
 									<option>0</option>
-									<flag>wxALIGN_RIGHT|wxALL</flag>
+									<flag>wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_go">
+										<label>Go</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALL|wxEXPAND</flag>
 									<border>5</border>
 									<object class="wxButton" name="m_reset">
-										<label>リセット</label>
+										<label>Reset</label>
 										<default>0</default>
 									</object>
 								</object>

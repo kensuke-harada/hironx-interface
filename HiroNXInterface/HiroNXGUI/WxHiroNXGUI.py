@@ -229,10 +229,10 @@ class MyApp(wx.App):
         #textCtrl.Bind(wx.EVT_TEXT, CheckValue)
 
         #vsizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(label, 0, wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(minLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT)
-        sizer.Add(textCtrl, 0, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
-        sizer.Add(maxLabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_LEFT)
+        sizer.Add(label, 1, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER)
+        sizer.Add(minLabel, 1, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT)
+        sizer.Add(textCtrl, 1, wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(maxLabel, 1, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_LEFT)
         #sizer.Add(vsizer, 0)
         #sizer.Add(slider, 1, wx.EXPAND)
         
