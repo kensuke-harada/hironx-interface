@@ -3,37 +3,29 @@
 * MotionCommandsOperations.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2011年10月27日 18時40分17秒 JST
+* 2012年2月21日 18時51分43秒 JST
 */
 
 public interface MotionCommandsOperations 
 {
   MotionCommandsPackage.RETURN_ID closeGripper ();
+  MotionCommandsPackage.RETURN_ID moveGripper (double[] r_angle, double[] l_angle);
 
-  //ýýýýýýýýýý
-  MotionCommandsPackage.RETURN_ID moveGripper (double[] angle);
-
-  //ýýýýýýýcHIROý¾ýýýlength(4), ý¤ýýdýidýþýý0ýýcommentýý5ýý
+  // HIROn4olength(4), Ô$nido8k0commento!W
   MotionCommandsPackage.RETURN_ID moveLinearCartesianAbs (MotionCommandsPackage.CarPosWithElbow rArm, MotionCommandsPackage.CarPosWithElbow lArm);
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
   MotionCommandsPackage.RETURN_ID moveLinearCartesianRel (MotionCommandsPackage.CarPosWithElbow rArm, MotionCommandsPackage.CarPosWithElbow lArm);
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
   MotionCommandsPackage.RETURN_ID movePTPJointAbs (double[] jointPoints);
 
-  //ýýýýýýýcHIROý¾ýýýlength(29)ýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // HIROn4olength(29)¢À©njobodyinfo.pyhXdegXM
   MotionCommandsPackage.RETURN_ID movePTPJointRel (double[] jointPoints);
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
-  MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq, double[] timeSeq);
+  // ¢À©njobodyinfo.pyhXdegXM
+  MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq);
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // ¢À©njobodyinfo.pyhXdegXM
   MotionCommandsPackage.RETURN_ID openGripper ();
-
-  //ýýýýýýýýýý
   MotionCommandsPackage.RETURN_ID setSpeedCartesian (int spdRatio);
 
-  //ýýýýýýýý
+  //Å[Z
   MotionCommandsPackage.RETURN_ID setSpeedJoint (int spdRatio);
 } // interface MotionCommandsOperations

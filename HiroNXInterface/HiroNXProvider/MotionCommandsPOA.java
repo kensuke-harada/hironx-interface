@@ -3,7 +3,7 @@
 * MotionCommandsPOA.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2011年10月27日 18時40分17秒 JST
+* 2012年2月21日 18時51分43秒 JST
 */
 
 public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
@@ -47,20 +47,19 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
          break;
        }
 
-
-  //ýýýýýýýýýý
        case 1:  // MotionCommands/moveGripper
        {
-         double angle[] = MotionCommandsPackage.DoubleSeqHelper.read (in);
+         double r_angle[] = MotionCommandsPackage.DoubleSeqHelper.read (in);
+         double l_angle[] = MotionCommandsPackage.DoubleSeqHelper.read (in);
          MotionCommandsPackage.RETURN_ID $result = null;
-         $result = this.moveGripper (angle);
+         $result = this.moveGripper (r_angle, l_angle);
          out = $rh.createReply();
          MotionCommandsPackage.RETURN_IDHelper.write (out, $result);
          break;
        }
 
 
-  //ýýýýýýýcHIROý¾ýýýlength(4), ý¤ýýdýidýþýý0ýýcommentýý5ýý
+  // HIROn4olength(4), Ô$nido8k0commento!W
        case 2:  // MotionCommands/moveLinearCartesianAbs
        {
          MotionCommandsPackage.CarPosWithElbow rArm = MotionCommandsPackage.CarPosWithElbowHelper.read (in);
@@ -72,8 +71,6 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
          break;
        }
 
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
        case 3:  // MotionCommands/moveLinearCartesianRel
        {
          MotionCommandsPackage.CarPosWithElbow rArm = MotionCommandsPackage.CarPosWithElbowHelper.read (in);
@@ -85,8 +82,6 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
          break;
        }
 
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
        case 4:  // MotionCommands/movePTPJointAbs
        {
          double jointPoints[] = MotionCommandsPackage.JointPosHelper.read (in);
@@ -98,7 +93,7 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
        }
 
 
-  //ýýýýýýýcHIROý¾ýýýlength(29)ýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // HIROn4olength(29)¢À©njobodyinfo.pyhXdegXM
        case 5:  // MotionCommands/movePTPJointRel
        {
          double jointPoints[] = MotionCommandsPackage.JointPosHelper.read (in);
@@ -110,20 +105,19 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
        }
 
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // ¢À©njobodyinfo.pyhXdegXM
        case 6:  // MotionCommands/movePTPJointAbsSeq
        {
          double jointPointsSeq[][] = MotionCommandsPackage.JointPosSeqHelper.read (in);
-         double timeSeq[] = MotionCommandsPackage.DoubleSeqHelper.read (in);
          MotionCommandsPackage.RETURN_ID $result = null;
-         $result = this.movePTPJointAbsSeq (jointPointsSeq, timeSeq);
+         $result = this.movePTPJointAbsSeq (jointPointsSeq);
          out = $rh.createReply();
          MotionCommandsPackage.RETURN_IDHelper.write (out, $result);
          break;
        }
 
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // ¢À©njobodyinfo.pyhXdegXM
        case 7:  // MotionCommands/openGripper
        {
          MotionCommandsPackage.RETURN_ID $result = null;
@@ -133,8 +127,6 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
          break;
        }
 
-
-  //ýýýýýýýýýý
        case 8:  // MotionCommands/setSpeedCartesian
        {
          int spdRatio = MotionCommandsPackage.ULONGHelper.read (in);
@@ -146,7 +138,7 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
        }
 
 
-  //ýýýýýýýý
+  //Å[Z
        case 9:  // MotionCommands/setSpeedJoint
        {
          int spdRatio = MotionCommandsPackage.ULONGHelper.read (in);

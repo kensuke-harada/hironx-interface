@@ -106,7 +106,7 @@ class MotionCommands_i (MotionCommandsPOA):
         # Must return: result
 
     # RETURN_ID moveGripper(in MotionCommands::DoubleSeq angle)
-    def moveGripper(self, angle):
+    def moveGripper(self, r_angle, l_angle):
         raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
         # *** Implement me
         # Must return: result

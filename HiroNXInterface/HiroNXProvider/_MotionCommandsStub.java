@@ -3,7 +3,7 @@
 * _MotionCommandsStub.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2011年10月27日 18時40分17秒 JST
+* 2012年2月21日 18時51分43秒 JST
 */
 
 public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl implements MotionCommands
@@ -28,14 +28,13 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
             }
   } // closeGripper
 
-
-  //ýýýýýýýýýý
-  public MotionCommandsPackage.RETURN_ID moveGripper (double[] angle)
+  public MotionCommandsPackage.RETURN_ID moveGripper (double[] r_angle, double[] l_angle)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
                 org.omg.CORBA.portable.OutputStream $out = _request ("moveGripper", true);
-                MotionCommandsPackage.DoubleSeqHelper.write ($out, angle);
+                MotionCommandsPackage.DoubleSeqHelper.write ($out, r_angle);
+                MotionCommandsPackage.DoubleSeqHelper.write ($out, l_angle);
                 $in = _invoke ($out);
                 MotionCommandsPackage.RETURN_ID $result = MotionCommandsPackage.RETURN_IDHelper.read ($in);
                 return $result;
@@ -44,14 +43,14 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
                 String _id = $ex.getId ();
                 throw new org.omg.CORBA.MARSHAL (_id);
             } catch (org.omg.CORBA.portable.RemarshalException $rm) {
-                return moveGripper (angle        );
+                return moveGripper (r_angle, l_angle        );
             } finally {
                 _releaseReply ($in);
             }
   } // moveGripper
 
 
-  //ýýýýýýýcHIROý¾ýýýlength(4), ý¤ýýdýidýþýý0ýýcommentýý5ýý
+  // HIROn4olength(4), Ô$nido8k0commento!W
   public MotionCommandsPackage.RETURN_ID moveLinearCartesianAbs (MotionCommandsPackage.CarPosWithElbow rArm, MotionCommandsPackage.CarPosWithElbow lArm)
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -73,8 +72,6 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
             }
   } // moveLinearCartesianAbs
 
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
   public MotionCommandsPackage.RETURN_ID moveLinearCartesianRel (MotionCommandsPackage.CarPosWithElbow rArm, MotionCommandsPackage.CarPosWithElbow lArm)
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -96,8 +93,6 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
             }
   } // moveLinearCartesianRel
 
-
-  //ý$"ýýýýýýý¥!ýýýýýýäüýýýýýýýýý
   public MotionCommandsPackage.RETURN_ID movePTPJointAbs (double[] jointPoints)
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -119,7 +114,7 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
   } // movePTPJointAbs
 
 
-  //ýýýýýýýcHIROý¾ýýýlength(29)ýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // HIROn4olength(29)¢À©njobodyinfo.pyhXdegXM
   public MotionCommandsPackage.RETURN_ID movePTPJointRel (double[] jointPoints)
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -141,14 +136,13 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
   } // movePTPJointRel
 
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
-  public MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq, double[] timeSeq)
+  // ¢À©njobodyinfo.pyhXdegXM
+  public MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
                 org.omg.CORBA.portable.OutputStream $out = _request ("movePTPJointAbsSeq", true);
                 MotionCommandsPackage.JointPosSeqHelper.write ($out, jointPointsSeq);
-                MotionCommandsPackage.DoubleSeqHelper.write ($out, timeSeq);
                 $in = _invoke ($out);
                 MotionCommandsPackage.RETURN_ID $result = MotionCommandsPackage.RETURN_IDHelper.read ($in);
                 return $result;
@@ -157,14 +151,14 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
                 String _id = $ex.getId ();
                 throw new org.omg.CORBA.MARSHAL (_id);
             } catch (org.omg.CORBA.portable.RemarshalException $rm) {
-                return movePTPJointAbsSeq (jointPointsSeq, timeSeq        );
+                return movePTPJointAbsSeq (jointPointsSeq        );
             } finally {
                 _releaseReply ($in);
             }
   } // movePTPJointAbsSeq
 
 
-  //ýýýýýýýcýýýýýýýý½ýý¤ýbodyinfo.pyýý±ýýýýdegñýý
+  // ¢À©njobodyinfo.pyhXdegXM
   public MotionCommandsPackage.RETURN_ID openGripper ()
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -184,8 +178,6 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
             }
   } // openGripper
 
-
-  //ýýýýýýýýýý
   public MotionCommandsPackage.RETURN_ID setSpeedCartesian (int spdRatio)
   {
             org.omg.CORBA.portable.InputStream $in = null;
@@ -207,7 +199,7 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
   } // setSpeedCartesian
 
 
-  //ýýýýýýýý
+  //Å[Z
   public MotionCommandsPackage.RETURN_ID setSpeedJoint (int spdRatio)
   {
             org.omg.CORBA.portable.InputStream $in = null;
