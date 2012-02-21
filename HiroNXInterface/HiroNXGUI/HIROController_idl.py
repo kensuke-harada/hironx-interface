@@ -202,7 +202,7 @@ omniORB.registerType(MotionCommands._NP_RepositoryId, _0__GlobalIDL._d_MotionCom
 
 # MotionCommands operations and attributes
 MotionCommands._d_closeGripper = ((), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
-MotionCommands._d_moveGripper = ((omniORB.typeMapping["IDL:MotionCommands/DoubleSeq:1.0"], ), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
+MotionCommands._d_moveGripper = ((omniORB.typeMapping["IDL:MotionCommands/DoubleSeq:1.0"], omniORB.typeMapping["IDL:MotionCommands/DoubleSeq:1.0"]), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
 MotionCommands._d_moveLinearCartesianAbs = ((omniORB.typeMapping["IDL:MotionCommands/CarPosWithElbow:1.0"], omniORB.typeMapping["IDL:MotionCommands/CarPosWithElbow:1.0"]), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
 MotionCommands._d_moveLinearCartesianRel = ((omniORB.typeMapping["IDL:MotionCommands/CarPosWithElbow:1.0"], omniORB.typeMapping["IDL:MotionCommands/CarPosWithElbow:1.0"]), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
 MotionCommands._d_movePTPJointAbs = ((omniORB.typeMapping["IDL:MotionCommands/JointPos:1.0"], ), (omniORB.typeMapping["IDL:MotionCommands/RETURN_ID:1.0"], ), None)
