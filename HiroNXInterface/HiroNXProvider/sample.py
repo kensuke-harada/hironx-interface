@@ -6,18 +6,63 @@ import math
 import time
 try:
     import rtm
+except ImportError:
+    print 'Import failure:rtm'
+try:
     import waitInput
 except ImportError:
-    print 'Import failure: rtm'
+    print 'Import failure:waitInput'
+
 import bodyinfo
-import bodyinfo2
 import java.lang.System
 import org.omg.CORBA.DoubleHolder
 try:
-	import OpenHRP
-	from OpenHRP.RobotHardwareServicePackage import SwitchStatus
+    import OpenHRP
+    from OpenHRP.RobotHardwareServicePackage import SwitchStatus
 except ImportError:
-    print 'Import failure: OpenHRP'
+    print 'Import failure:OpenHRP'
+
+#
+# adaptor class for SequencePlayerRos
+#
+class SequencePlayerRosService:
+    def __init__(self, seq_svc, rh_svc):
+        self.ref = seq_svc
+        self.rhref = rh_svc
+        self.partMembers = []
+
+    def initPartNames(self):
+        ssholder = OpenHRP.RobotHardwareServicePackage.StrSequenceHolder()
+        self.rhref.getJointPartNames(ssholder)
+        self.partNames = ssholder.value
+        ssholder = OpenHRP.RobotHardwareServicePackage.StrSequenceHolder()
+        for pn in self.partNames:
+           self.rhref.getJointNamesInPart(pn, ssholder)
+           self.partMembers.append(ssholder.value)
+
+    def isEmpty(self, mask, waitFlag):
+        return self.ref.isEmpty()
+
+    def setJointAngles(self, pose, tm, ttm):
+        if len(self.partMembers) == 0:
+            self.initPartNames()	    
+        angles = []
+        mask = []
+        for i in range(len(pose)):
+            num = len(self.partMembers[i])
+            if len(pose[i]) == 0:
+                angles += [0] * num
+                mask += [False] * num
+            else:
+                angles += pose[i]
+                mask += [True] * num
+        return self.ref.setJointAnglesWithMask(angles, mask, tm)
+
+    def loadTrajectory(self, basename, tm, ttm):
+        print("not implemented")
+
+    def clearBuffer(mask):
+        self.ref.clear()
 
 def init(robotHost=None):
     if robotHost != None:
@@ -37,14 +82,17 @@ def init(robotHost=None):
 
     print "initialized successfully"
 
+
 def activateComps(rtcList):
     rtm.serializeComponents(rtcList)
     for r in rtcList:
         r.start()
 
+
 def initRTC(module, name):
     ms.load(module)
     return ms.create(module, name)
+
 
 def setJointAnglesDeg(pose, tm, ttm = org.omg.CORBA.DoubleHolder(), wait=True):
     ret = seq_svc.setJointAngles(bodyinfo.deg2radPose(pose), tm, ttm)
@@ -62,39 +110,61 @@ def setJointAnglesDeg2(pose, rhand, lhand, tm, ttm = org.omg.CORBA.DoubleHolder(
         seq_svc.isEmpty(mask, True)
     return ret
 
-def goInitial(tm=bodyinfo.timeToInitialPose):
-    setJointAnglesDeg(bodyinfo.initialPose, tm)
+def goInitial(tm=bodyinfo.timeToInitialPose, wait = True):
+    setJointAnglesDeg(bodyinfo.initialPose, tm, wait=wait)
 
-def goOffPose(tm=bodyinfo.timeToOffPose):
-    setJointAnglesDeg(bodyinfo.offPose, tm)
 
-def servoOn(part = 'all'):
+def goOffPose(tm=bodyinfo.timeToOffPose, wait = True):
+    setJointAnglesDeg(bodyinfo.offPose, tm, wait=wait)
+    if wait:
+        servoOff(doConfirm=False)
+
+
+def servoOn(part = 'all', doConfirm = True):
+#    if doConfirm:
+#      waitInputConfirm("!! Robot Motion Warning !! \n Push [OK] to Servo ON "+part)
     if rh_svc != None:
-        rh_svc.servo(part, SwitchStatus.SWITCH_ON)
         if part == 'all':
+            rh_svc.servo('BODY', SwitchStatus.SWITCH_ON)
+            rh_svc.servo('RARM', SwitchStatus.SWITCH_ON)
+            rh_svc.servo('LARM', SwitchStatus.SWITCH_ON)
             rh_svc.servo('RHAND', SwitchStatus.SWITCH_ON)
             rh_svc.servo('LHAND', SwitchStatus.SWITCH_ON)
+            # setup logging
+            setupLogger()
+        else:
+            rh_svc.servo(part, SwitchStatus.SWITCH_ON)
 
-def servoOff(part = 'all'):
+
+def servoOff(part = 'all',doConfirm=True):
+#    if doConfirm:
+#        waitInputConfirm("!! Robot Motion Warning !! \n Push [OK] to Servo OFF "+part)
     if rh_svc != None:
+        # save log
+        saveLog()
         rh_svc.servo(part, SwitchStatus.SWITCH_OFF)
         if part == 'all':
             rh_svc.servo('RHAND', SwitchStatus.SWITCH_OFF)
             rh_svc.servo('LHAND', SwitchStatus.SWITCH_OFF)
 
+
 def loadPattern(basename, tm=3.0):
     seq_svc.loadPattern(basename, tm)
 
+
 def testPattern():
-    reload(bodyinfo2)
+#    waitInputConfirm("!! Robot Motion Warning !! \n Push [OK] to execute "+\
+#                     bodyinfo.testPatternName)
     dblHolder = org.omg.CORBA.DoubleHolder()
-    for p in bodyinfo2.testPattern:
-        print setJointAnglesDeg2(p[0], p[1], p[2], p[3], dblHolder)
+    for p in bodyinfo.testPattern:
+        print setJointAnglesDeg(p[0], p[1], dblHolder)
         print dblHolder.value
+#    waitInputConfirm("finished")
+
 
 def createComps(hostname=socket.gethostname()):
     global ms, adm_svc, rh, rh_svc, seq, seq_svc, armR, armR_svc,\
-           armL, armL_svc, grsp, grsp_svc, sa, tk_svc, log
+           armL, armL_svc, grsp, grsp_svc, sa, tk_svc, log, log_svc, gf, ca, use_ros
     ms = rtm.findRTCmanager(hostname)
 
     adm = rtm.findRTC("SystemAdmin0")
@@ -108,6 +178,8 @@ def createComps(hostname=socket.gethostname()):
 
     seq = initRTC("SequencePlayer", "seq")
     seq_svc = OpenHRP.SequencePlayerServiceHelper.narrow(seq.service("service0"))
+    if dir(seq_svc).count("loadTrajectory") == 0:
+        seq_svc = SequencePlayerRosService(seq_svc, rh_svc)
 
     armR = initRTC("ArmControl", "armR")
     armR_svc = OpenHRP.ArmControlServiceHelper.narrow(armR.service("service0"))
@@ -122,8 +194,14 @@ def createComps(hostname=socket.gethostname()):
     tk_svc = OpenHRP.TimeKeeperServiceHelper.narrow(sa.service("service1"))
 
     log = initRTC("DataLogger", "log")
+    log_svc = OpenHRP.DataLoggerServiceHelper.narrow(log.service("service0"))
 
-    return [rh, seq, armR, armL, sa, grsp, log]
+    gf = initRTC("GazeFixer", "gf")
+
+    ca = initRTC("CollisionAvoider", "ca")
+
+    return [rh, seq, armR, armL, sa, grsp, gf, ca, log]
+
 
 def connectComps():
     rtm.connectPorts(rh.port("jointDatOut"),   seq.port("jointDatIn"))
@@ -135,29 +213,39 @@ def connectComps():
     rtm.connectPorts( armL.port("jointDatOut"),    sa.port("jointDatIn2"))
 
     rtm.connectPorts(   sa.port("jointDatOut"), grsp.port("jointDatIn"))
-    rtm.connectPorts( grsp.port("jointDatOut"),    rh.port("jointDatIn"))
+    rtm.connectPorts( grsp.port("jointDatOut"),   gf.port("jointDatIn"))
+    rtm.connectPorts(   gf.port("jointDatOut"),   ca.port("jointDatIn"))
+    rtm.connectPorts(   ca.port("jointDatOut"),   rh.port("jointDatIn"))
+
 
 def setupLogger():
-    global log_svc
-    log_svc = OpenHRP.DataLoggerServiceHelper.narrow(log.service("service0"))
     log_svc.add("TimedJointData", "jointDatServo")
     log_svc.add("TimedJointData", "jointDatSeq")
     rtm.connectPorts( rh.port("jointDatOut"),  log.port("jointDatServo"))
     rtm.connectPorts( seq.port("jointDatOut"), log.port("jointDatSeq"))
 
+def dateString():
+    tm = time.localtime()
+    return '%04d%02d%02d%02d%02d%02d'%(tm.tm_year, 
+                                       tm.tm_mon,
+                                       tm.tm_mday,
+                                       tm.tm_hour,
+                                       tm.tm_min,
+                                       tm.tm_sec)
+
 def saveLog():
     if log_svc == None:
       waitInputConfirm("Setup DataLogger RTC first.")
       return
-    log_svc.save('/tmp/sample')
+    log_svc.save('/opt/grx/%s/log/logger-%s'%(bodyinfo.modelName,dateString()))
     print 'saved'
 
 def calibrateJoint():
-    print('calibrateing joints ...'),
+    print('calibrating joints ...'),
     if rh_svc.calibrateJoint('all') == 0:
-      print('finised.')
+      print('Finished.')
     else:
-      print('failed. execute servoOff() and try again.')
+      print('Failed. servoOff() and try again.')
 
 def servoOnHands():
     servoOn('RHAND')
@@ -175,18 +263,18 @@ def DisengageProtectiveStop():
 
 def reboot():
     if adm_svc != None:
-        #waitInputConfirm("Reboot the robot host ?")
+        waitInputConfirm("Reboot the robot host ?")
         adm_svc.reboot("")
 
 def shutdown():
     if adm_svc != None:
-        #waitInputConfirm("Shutdown the robot host ?")
+        waitInputConfirm("Shutdown the robot host ?")
         adm_svc.shutdown("")
 
 def getVersion():
     if adm_svc != None:
         currentVersion = adm_svc.getVersion("")
-        #waitInputConfirm("Robot system version is: %s"%(currentVersion))
+        waitInputConfirm("Robot system version is: %s"%(currentVersion))
 
 #
 # move arms using Inverse Kinematics
@@ -207,13 +295,42 @@ def moveR(x, y, z, r, p, w, rate=30, wait=True):
 def moveL(x, y, z, r, p, w, rate=30, wait=True):
   return move(armL_svc, x, y, z, r, p, w, rate, wait)
 
+def LARM_X_P10mm():
+  return moveRelativeL(dx=0.010)
+def LARM_X_M10mm():
+  return moveRelativeL(dx=-0.010)
+def LARM_X_P05mm():
+  return moveRelativeL(dx=0.005)
+def LARM_X_M05mm():
+  return moveRelativeL(dx=-0.005)
+
+def LARM_Y_P10mm():
+  return moveRelativeL(dy=0.010)
+def LARM_Y_M10mm():
+  return moveRelativeL(dy=-0.010)
+def LARM_Y_P05mm():
+  return moveRelativeL(dy=0.005)
+def LARM_Y_M05mm():
+  return moveRelativeL(dy=-0.005)
+
+def LARM_Z_P10mm():
+  return moveRelativeL(dz=0.010)
+def LARM_Z_M10mm():
+  return moveRelativeL(dz=-0.010)
+def LARM_Z_P05mm():
+  return moveRelativeL(dz=0.005)
+def LARM_Z_M05mm():
+  return moveRelativeL(dz=-0.005)
+
 def move(armsvc, x, y, z, r, p, w, rate, wait):
   ret = armsvc.setTargetAngular(x, y, z, r, p, w, rate)
-  while wait and armsvc.checkStatus() == OpenHRP.ArmState.ArmBusyState:
+  while wait:
     tk_svc.sleep(0.2)
+    if armsvc.checkStatus() != OpenHRP.ArmState.ArmBusyState:
+        break
   return ret
 
-def getCurrentConfiguration(armsvc):
+def getCurrentConfiguration(armsvc, show=False):
   x = org.omg.CORBA.DoubleHolder()
   y = org.omg.CORBA.DoubleHolder()
   z = org.omg.CORBA.DoubleHolder()
@@ -221,7 +338,18 @@ def getCurrentConfiguration(armsvc):
   p = org.omg.CORBA.DoubleHolder()
   w = org.omg.CORBA.DoubleHolder()
   armsvc.getCurrentConfiguration(x, y, z, r, p, w)
-  return [x.value, y.value, z.value, r.value, p.value, w.value]
+  ret = [x.value, y.value, z.value, r.value, p.value, w.value]
+  if show:
+    print '\n(x,y,z,r,p,w) = '
+    for v in ret:
+      print '%6.3f,'%v,
+  return ret
+
+def printConfigurationR():
+  return getCurrentConfiguration(armR_svc, True)
+
+def printConfigurationL():
+  return getCurrentConfiguration(armL_svc, True)
 
 def ikTest():
   import random
@@ -243,6 +371,7 @@ def ikTest():
     else:
       print 'differece   (x[m], y[m], z[m], r[rad], p[rad], y[rad]) = %7.4f %7.4f %7.4f %7.4f %7.4f %7.4f' %(x2-x1, y2-y1, z2-z1, r2-r1, p2-p1, w2-w1)
   goInitial(4)
+
 
 def ikTest_interrupt():
   import random
@@ -290,6 +419,7 @@ def ikTest_interrupt():
 
   goInitial(4)
 
+
 def ikTest_spline():
   import random
   goInitial(8)
@@ -312,40 +442,71 @@ def ikTest_spline():
 #
 # grasper
 #
-def rhandOpen():
+def rhandOpen(distance=100):
   ttm = org.omg.CORBA.DoubleHolder()
-  for i in range(12):
-    grsp_svc.setJointAngles('RHAND', bodyinfo.anglesFromDistance(i*10), 1.0, ttm)
-    tk_svc.sleep(0.1)
+  grsp_svc.setJointAngles('RHAND', bodyinfo.anglesFromDistance(distance), 1.0, ttm)
+
+def rhandOpen60():
+  rhandOpen(60)
+
+
+def rhandOpen30():
+  rhandOpen(30)
+
 
 def rhandOpen20():
-  ttm = org.omg.CORBA.DoubleHolder()
-  grsp_svc.setJointAngles('RHAND', bodyinfo.anglesFromDistance(20), 1.0, ttm)
+  rhandOpen(20)
+
 
 def rhandClose():
-  ttm = org.omg.CORBA.DoubleHolder()
-  grsp_svc.setJointAngles('RHAND', bodyinfo.anglesFromDistance(0), 1.0, ttm)
+  rhandOpen(0)
 
-def lhandOpen():
+def lhandOpen(distance=100):
   ttm = org.omg.CORBA.DoubleHolder()
-  grsp_svc.setJointAngles('LHAND', bodyinfo.anglesFromDistance(100), 1.0, ttm)
+  grsp_svc.setJointAngles('LHAND', bodyinfo.anglesFromDistance(distance), 1.0, ttm)
+
+
+def lhandOpen60():
+  lhandOpen(60)
+
+
+def lhandOpen30():
+  lhandOpen(30)
+
 
 def lhandOpen20():
-  ttm = org.omg.CORBA.DoubleHolder()
-  grsp_svc.setJointAngles('LHAND', bodyinfo.anglesFromDistance(20), 1.0, ttm)
+  lhandOpen(20)
+
 
 def lhandClose():
-  ttm = org.omg.CORBA.DoubleHolder()
-  grsp_svc.setJointAngles('LHAND', bodyinfo.anglesFromDistance(0), 1.0, ttm)
+  lhandOpen(0)
+
 
 def setRHandAnglesDeg(angles):
   ttm = org.omg.CORBA.DoubleHolder()
   grsp_svc.setJointAngles('RHAND', [v*math.pi/180.0 for v in angles], 1.0, ttm)
 
+
 def setLHandAnglesDeg(angles):
   ttm = org.omg.CORBA.DoubleHolder()
   grsp_svc.setJointAngles('LHAND', [v*math.pi/180.0 for v in angles], 1.0, ttm)
 
+def gazeFixerTest():
+  gazeFixerOn()
+  setJointAnglesDeg([[20,0,0], [], [], [], []], 5)
+  gazeFixerOff()
+
+def gazeFixerOn():
+  gf.setProperty("isEnabled", "1")
+
+def gazeFixerOff():
+  gf.setProperty("isEnabled", "0")
+
+def collisionCheckOn():
+  ca.setProperty("isEnabled", "1")
+
+def collisionCheckOff():
+  ca.setProperty("isEnabled", "0")
 
 #
 # test execution of this script

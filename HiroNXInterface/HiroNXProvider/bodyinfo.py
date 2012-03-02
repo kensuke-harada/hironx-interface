@@ -21,21 +21,21 @@ try:
         print 'bodyinfo.py: '+f+' is added.'
 except OSError:
     print 'Not exists: '+EXTRA_JAR_PATH
-
+	
 timeToInitialPose = 10.0 # [sec]
 initialPose = [
-   [ 0,    0,    60],   # 腰ヨー、首ヨー、首ピッチ
-   [-15,  0, -143,  0,  0,  0], # 右うで wrl の順番
-   [ 15,  0, -143,  0,  0,  0], # 左腕
-   [ 0,    0,    0,   0], # 右ハンド
-   [ 0,    0,    0,   0], # 左ハンド
+   [ 0,    0,    0],   
+   [-0.6,  0, -100,  15.2,  9.4,  3.2],
+   [ 0.6,  0, -100, -15.2,  9.4, -3.2],
+   [], 	 # [ 0,    0,    0,   0],
+   [],   # [ 0,    0,    0,   0],
 ]
 
 timeToOffPose = 10.0 # [sec]
 offPose = [ 
    [0,    0,    0],   
-   [25, -140, -159,  45,  0, 0], 
-   [-25, -140, -159, -45,  0, 0],
+   [25, -139, -157,  45,  0, 0], 
+   [-25, -139, -157, -45,  0, 0],
    [], 	 # [ 0,    0,    0,   0],
    [],   # [ 0,    0,    0,   0],
 ]
@@ -73,6 +73,7 @@ testPattern2 = [
        [], [] ], 3],
 ]
 
+
 def anglesFromDistance(gripDist):
     
     safetyMargin = 3
@@ -99,6 +100,7 @@ def anglesFromDistance(gripDist):
 
     return a1rad, a2rad, -a1rad, -a2rad #, dEnd
 
+
 # this is for compatibility between different robots
 def deg2radPose(pose):
     ret = []
@@ -108,11 +110,15 @@ def deg2radPose(pose):
 
 # get bodyInfo from modelloader
 def init(nameContext):
-  global url, linkInfo
+  global url, linkInfo, dof
   obj = nameContext.resolve([org.omg.CosNaming.NameComponent('ModelLoader', '')])
   mdlldr = jp.go.aist.hrp.simulator.ModelLoaderHelper.narrow(obj)
   bodyInfo = mdlldr.getBodyInfo(url)
   linkInfo = bodyInfo.links()
+  dof = 0
+  for l in linkInfo:
+      if l.jointId >= 0:
+          dof += 1
 
 def jointId(jointName):
   for l in linkInfo:
