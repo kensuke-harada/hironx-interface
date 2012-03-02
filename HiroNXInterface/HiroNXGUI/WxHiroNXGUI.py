@@ -13,7 +13,14 @@ import OpenRTM_aist
 import WxHelper
 import HiroNXGUI
 from Joint import Joint 
-import bodyinfo 
+import bodyinfo
+
+from util import radFromDeg   
+
+import _GlobalIDL, _GlobalIDL__POA
+MotionCommands = _GlobalIDL.MotionCommands
+
+
 
 class JointValidator(wx.PyValidator):
     def __init__(self, pyVar=None):
@@ -67,9 +74,8 @@ class JointValidator(wx.PyValidator):
         if not wx.Validator_IsSilent():
             wx.Bell()
         return
-    
-    
-    
+
+
 class MyApp(wx.App):
     def OnInit(self):
         path = os.path.dirname(__file__)
@@ -111,6 +117,15 @@ class MyApp(wx.App):
         self.m_go.Bind(wx.EVT_BUTTON, self.OnGo)
         self.m_reset = xrc.XRCCTRL(self.frame, 'm_reset')
         self.m_reset.Bind(wx.EVT_BUTTON, self.OnReset)
+        self.m_goArmRel = xrc.XRCCTRL(self.frame, 'm_goArmRel')
+        print self.m_reset, self.m_goArmRel 
+        self.m_goArmRel.Bind(wx.EVT_BUTTON, self.OnGoArmRel)
+
+        names = ["X", "Y", "Z", "Roll", "Pitch", "Yaw"]
+        for lr in ["Left", "Right"]:
+            for nctrl in map(lambda n: "m_rel%s%s"%(lr, n), names):
+                tc = xrc.XRCCTRL(self.frame, nctrl)
+                tc.SetValidator(JointValidator())
 
         
         m_splitter1 = xrc.XRCCTRL(self.frame,'m_splitter1')
@@ -188,7 +203,7 @@ class MyApp(wx.App):
                 last_panel = panels[code[0]]
                 self.addJoint(last_panel, code)
     
-    # スライダーの値をリセットする。
+    # 関節角度の項目の値をリセットする。
     def resetJoints(self):
         m_splitter1 = xrc.XRCCTRL(self.frame,'m_splitter1')
         joints = self._joints        
@@ -196,7 +211,6 @@ class MyApp(wx.App):
             joint = joints[code]
             name = 'm_slider_%s' % code
             #print jointsDic[code], code, name
-            #slider = m_splitter1.FindWindowByName(name)
             text = m_splitter1.FindWindowByName('m_text_%s' % code)
             if text:
                 validator = text.Validator
@@ -210,7 +224,7 @@ class MyApp(wx.App):
                     label =  m_splitter1.FindWindowByName('m_max_%s' % code)
                     label.Label = ' ≦ %d'%validator.Max
 
-    # 関節操作パネル（関節名、スライダー、テキスト）を追加
+    # 関節操作パネル（関節名、テキスト）を追加
     # parent: 親パネル
     # code : 関節名コード
     # name : 関節名
@@ -251,7 +265,41 @@ class MyApp(wx.App):
             print points
             print 'RTC not connected.'
 
-    # スライダーの値のリストを返す。 
+    
+    # moveLinearCartesianRel タブの右または左のx, y, z, ロール、ピッチ、ヨーの値を取得し、
+    # 3x4の回転移動行列として返す。
+    def _armPos(self, lr):
+        names = ["X", "Y", "Z", "Roll", "Pitch", "Yaw"]
+        for nctrl in map(lambda n: "m_rel%s%s"%(lr, n), names):
+            tc = xrc.XRCCTRL(self.frame, nctrl)
+            #arm[y][x] = float(tc.Value)
+            val = tc.Value
+            if len(val) == 0:
+                val = "0"
+            vals.append(float(val))
+        x,y,z,r,p,y = vals
+        r, p, y = util.radFromDeg(r, p, y) 
+        arm = rotFromRpy(r, p, y)
+        arm[0][3] = x
+        arm[1][3] = y
+        arm[2][3] = z
+        return arm
+
+    def OnGoArmRel(self, event):
+        print 'GoArmRel'
+        arm = self._armPos("Right")
+        lArm = MotionCommands.CarPosWithElbow(arm, 0, 0)
+        arm = self._armPos("Left")
+        rArm = MotionCommands.CarPosWithElbow(arm, 0, 0)
+        print "left:", lArm
+        print "right", rArm
+        if self.rtc._motion._ptr():
+            return_id = self.rtc._motion._ptr().moveLinearCartesianRel(rArm, lArm)
+            print return_id
+        else:
+            print 'RTC not connected.'
+
+    # 関節角度のテキストコントロールの値のリストを返す。 
     # 並び順は Joint.body_codes による。
     def sliderValueList(self):
         points = []
@@ -259,7 +307,7 @@ class MyApp(wx.App):
             points.append(float(s.Value))
         return points
     
-    # スライダーコントロールのリストを返す。
+    # 関節角度のテキストコントロールのリストを返す。
     # 並び順は Joint.body_codes による。
     def sliders(self):
         if self.sliderList:

@@ -2,7 +2,7 @@
 <resource xmlns="http://www.wxwindows.org/wxxrc" version="2.3.0.1">
 	<object class="wxFrame" name="MyFrame1">
 		<style>wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL</style>
-		<size>435,724</size>
+		<size>521,727</size>
 		<title>HiroNX GUI</title>
 		<object class="wxBoxSizer">
 			<orient>wxVERTICAL</orient>
@@ -371,8 +371,8 @@
 												<rows>2</rows>
 												<cols>4</cols>
 												<vgap>0</vgap>
-												<hgap>10</hgap>
-												<growablecols>0,2</growablecols>
+												<hgap>0</hgap>
+												<growablecols>1</growablecols>
 												<growablerows></growablerows>
 											</object>
 										</object>
@@ -418,7 +418,7 @@
 								</object>
 								<object class="sizeritem">
 									<option>0</option>
-									<flag>wxALL|wxEXPAND</flag>
+									<flag>wxALIGN_RIGHT|wxALL</flag>
 									<border>5</border>
 									<object class="wxButton" name="m_go">
 										<label>Go</label>
@@ -427,11 +427,396 @@
 								</object>
 								<object class="sizeritem">
 									<option>0</option>
-									<flag>wxALL|wxEXPAND</flag>
+									<flag>wxALIGN_RIGHT|wxALL</flag>
 									<border>5</border>
 									<object class="wxButton" name="m_reset">
-										<label>Reset</label>
+										<label>リセット</label>
 										<default>0</default>
+									</object>
+								</object>
+							</object>
+						</object>
+					</object>
+					<object class="notebookpage">
+						<label>moveLinearCartesianRel</label>
+						<selected>0</selected>
+						<object class="wxPanel" name="m_moveLinearCartesianRel">
+							<style>wxTAB_TRAVERSAL</style>
+							<object class="wxBoxSizer">
+								<orient>wxVERTICAL</orient>
+								<object class="sizeritem">
+									<option>0</option>
+									<flag>wxALIGN_CENTER|wxALL|wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxButton" name="m_goArmRel">
+										<label>Go</label>
+										<default>0</default>
+									</object>
+								</object>
+								<object class="sizeritem">
+									<option>1</option>
+									<flag>wxEXPAND</flag>
+									<border>5</border>
+									<object class="wxSplitterWindow" name="m_splitter3">
+										<style>wxSP_3D</style>
+										<sashpos>0</sashpos>
+										<gravity>0</gravity>
+										<minsize>0</minsize>
+										<orientation>vertical</orientation>
+										<object class="wxPanel" name="m_panel10">
+											<style>wxTAB_TRAVERSAL</style>
+											<object class="wxFlexGridSizer">
+												<rows>10</rows>
+												<cols>2</cols>
+												<vgap>0</vgap>
+												<hgap>0</hgap>
+												<growablecols>1</growablecols>
+												<growablerows></growablerows>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText13">
+														<label>左腕</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText39">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText9">
+														<label>X</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftX">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText10">
+														<label>Y</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftY">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText11">
+														<label>Z</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftZ">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText36">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText12">
+														<label>(単位：メートル)</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticLine" name="m_staticline26">
+														<style>wxLI_HORIZONTAL</style>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticLine" name="m_staticline27">
+														<style>wxLI_HORIZONTAL</style>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText132">
+														<label>ロール</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftRoll">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText14">
+														<label>ピッチ</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftPitch">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText15">
+														<label>ヨー</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relLeftYaw">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText40">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText16">
+														<label>(単位：度)</label>
+													</object>
+												</object>
+											</object>
+										</object>
+										<object class="wxPanel" name="m_panel101">
+											<style>wxTAB_TRAVERSAL</style>
+											<object class="wxFlexGridSizer">
+												<rows>10</rows>
+												<cols>2</cols>
+												<vgap>0</vgap>
+												<hgap>0</hgap>
+												<growablecols>1</growablecols>
+												<growablerows></growablerows>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText131">
+														<label>右腕</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText391">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText91">
+														<label>X</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightX">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText101">
+														<label>Y</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightY">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText111">
+														<label>Z</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightZ">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText361">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText121">
+														<label>(単位：メートル)</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticLine" name="m_staticline261">
+														<style>wxLI_HORIZONTAL</style>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxEXPAND | wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticLine" name="m_staticline271">
+														<style>wxLI_HORIZONTAL</style>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText1321">
+														<label>ロール</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightRoll">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText141">
+														<label>ピッチ</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightPitch">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_RIGHT|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText151">
+														<label>ヨー</label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxTextCtrl" name="m_relRightYaw">
+														<value>0</value>
+														<maxlength>0</maxlength>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText401">
+														<label></label>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="m_staticText161">
+														<label>(単位：度)</label>
+													</object>
+												</object>
+											</object>
+										</object>
 									</object>
 								</object>
 							</object>

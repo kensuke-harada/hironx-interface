@@ -28,8 +28,9 @@ class Joint:
         for list in Joint.body_codes:
             col = 0
             for code in list:
-                joints[code]._initial = initialPose[row][col]
-                col += 1
+                if len(initialPose[row]) > 0:
+                    joints[code]._initial = initialPose[row][col]
+                    col += 1
             row += 1
             
     @classmethod
