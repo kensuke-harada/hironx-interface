@@ -104,6 +104,7 @@ def setJointAnglesDeg(pose, tm, ttm = org.omg.CORBA.DoubleHolder(), wait=True):
 def setJointAnglesDeg2(pose, rhand, lhand, tm, ttm = org.omg.CORBA.DoubleHolder(), wait=True):
     grsp_svc.setJointAngles('RHAND', [v*math.pi/180.0 for v in rhand], 1.0, ttm)
     grsp_svc.setJointAngles('LHAND', [v*math.pi/180.0 for v in lhand], 1.0, ttm)
+    time.sleep(0.2)
     ret = seq_svc.setJointAngles(bodyinfo.deg2radPose(pose), tm, ttm)
     mask = 31
     if wait:
