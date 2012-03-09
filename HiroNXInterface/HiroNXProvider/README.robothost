@@ -1,0 +1,18 @@
+.robothost について
+
+HiroNXProvider を利用する前に、Hiro のホスト名を .rohothost に設定してください。
+
+付属の .robothost は仮に hiro011 となっていますが、Hiro一台一台に異なるホスト名が
+割り当てられているので、このままでは HiroNXProvider は動作しません。
+
+
+HiroNXProvider.py の実行中に、sample.py の、
+
+    rh_svc = OpenHRP.RobotHardwareServiceHelper.narrow(rh.service("service0"))
+
+のあたりで 
+
+	AttributeError: 'NoneType' object has no attribute 'service'
+
+のようなエラーが出る場合は、この .robothost の値が正しくないために gui.py の 
+hostname() メソッドが適切な値を返せないことがあります。 

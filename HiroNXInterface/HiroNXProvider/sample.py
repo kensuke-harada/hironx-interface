@@ -104,7 +104,7 @@ def setJointAnglesDeg(pose, tm, ttm = org.omg.CORBA.DoubleHolder(), wait=True):
 def setJointAnglesDeg2(pose, rhand, lhand, tm, ttm = org.omg.CORBA.DoubleHolder(), wait=True):
     grsp_svc.setJointAngles('RHAND', [v*math.pi/180.0 for v in rhand], 1.0, ttm)
     grsp_svc.setJointAngles('LHAND', [v*math.pi/180.0 for v in lhand], 1.0, ttm)
-    time.sleep(0.2)
+    time.sleep(0.3)
     ret = seq_svc.setJointAngles(bodyinfo.deg2radPose(pose), tm, ttm)
     mask = 31
     if wait:
@@ -264,18 +264,18 @@ def DisengageProtectiveStop():
 
 def reboot():
     if adm_svc != None:
-        waitInputConfirm("Reboot the robot host ?")
+        #waitInputConfirm("Reboot the robot host ?")
         adm_svc.reboot("")
 
 def shutdown():
     if adm_svc != None:
-        waitInputConfirm("Shutdown the robot host ?")
+        #waitInputConfirm("Shutdown the robot host ?")
         adm_svc.shutdown("")
 
 def getVersion():
     if adm_svc != None:
         currentVersion = adm_svc.getVersion("")
-        waitInputConfirm("Robot system version is: %s"%(currentVersion))
+        #waitInputConfirm("Robot system version is: %s"%(currentVersion))
 
 #
 # move arms using Inverse Kinematics
