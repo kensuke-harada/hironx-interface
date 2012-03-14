@@ -166,9 +166,13 @@ class MotionCommands_i (MotionCommandsPOA):
     # RETURN_ID movePTPJointAbs(in MotionCommands::JointPos jointPoints)
     def movePTPJointAbs(self, jointPoints):
         try:
-            pose = self.__joints2pose(jointPoints)
+            print "movePTPJointAbs:", jointPoints
+            radPoints = map(lambda v: v, jointPoints)
+            degPoints = util.degFromRad(radPoints)
+            #print degPoints
+            pose = self.__joints2pose(degPoints)
             time = self.time
-            #print "  ", time
+            print "  ", time
             rhand, lhand = pose[3:5]
             pose[3], pose[4] = [], []
             #id=0
@@ -189,11 +193,8 @@ class MotionCommands_i (MotionCommandsPOA):
     # RETURN_ID movePTPJointAbsSeq(in MotionCommands::JointPosSeq jointPointsSeq)
     def movePTPJointAbsSeq(self, jointPointsSeq, timeSeq):
         try:
-#            subSeq = self.__subTimeSeq(jointPointsSeq)
-#            timeSeq = self.__calcTimeSeq(subSeq, self.time, self.ratio)
             for i, zp in enumerate(zip(jointPointsSeq, timeSeq)):
                 jp, time = zp
-                #print "motion (%d)" % i,
                 if len(jp) != 24:
                     raise 'pose broken.'
                 self.time = time
@@ -205,26 +206,6 @@ class MotionCommands_i (MotionCommandsPOA):
             print traceback.print_tb(sys.exc_info()[2])
             return MotionCommandsPackage.RETURN_ID(-1, "NG")
 
-    # jointPointSeq の各ポーズx関節について、遷移率（角移動量をuvlimitで割る）のリストを作る。
-    def __subTimeSeq(self, jointPointSeq):
-        timeSeq = []
-        for i in range(1, len(jointPointSeq)):
-            times = map( (lambda p, j, l: abs(j-p)/l), jointPointSeq[i-1][0:23], jointPointSeq[i][0:23], self.uvlimit)
-            timeSeq.append(times)
-#        print "limit:          " , ", ".join(map( (lambda n: "%5.2f"%n), self.uvlimit))
-#        for i, times in enumerate(timeSeq):
-#            print "%2d: max(%5.2f) " % (i, max(times)), ", ".join(map( (lambda n: "%5.2f"%n), times))
-
-        return timeSeq
-
-    # 遷移率リスト timeSeq からポーズごとの最大値を取り出し、ratio をかけて移動率を求める。
-    # ただし、最初のポーズの遷移率は、引数 time とする。
-    def __calcTimeSeq(self, subTimeSeq, time, ratio):
-        timeSeq = map( (lambda pose: max(pose)*ratio), subTimeSeq)
-        timeSeq.insert(0, time)
-        #for i, time in enumerate(timeSeq):
-	    #print "%2d: %5.2f"%(i, time)
-        return timeSeq
         
     # RETURN_ID openGripper()
     def openGripper(self):
@@ -243,7 +224,8 @@ class MotionCommands_i (MotionCommandsPOA):
     
     def setSpeedJoint(self, spdRatio):
         try:
-            self.ratio = spdRatio
+            print 'setSpeedJoint:', spdRatio
+            self.time = spdRatio
             return MotionCommandsPackage.RETURN_ID(0, 'Ok')
         except:
             print sys.exc_info()[0]

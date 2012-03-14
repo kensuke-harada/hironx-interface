@@ -3,7 +3,7 @@
 * _MotionCommandsStub.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2012年2月21日 18時51分43秒 JST
+* 2012年3月13日 14時17分43秒 JST
 */
 
 public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl implements MotionCommands
@@ -137,12 +137,13 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
 
 
   // ¢À©njobodyinfo.pyhXdegXM
-  public MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq)
+  public MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq, double[] timeSeq)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
                 org.omg.CORBA.portable.OutputStream $out = _request ("movePTPJointAbsSeq", true);
                 MotionCommandsPackage.JointPosSeqHelper.write ($out, jointPointsSeq);
+                MotionCommandsPackage.DoubleSeqHelper.write ($out, timeSeq);
                 $in = _invoke ($out);
                 MotionCommandsPackage.RETURN_ID $result = MotionCommandsPackage.RETURN_IDHelper.read ($in);
                 return $result;
@@ -151,7 +152,7 @@ public class _MotionCommandsStub extends org.omg.CORBA.portable.ObjectImpl imple
                 String _id = $ex.getId ();
                 throw new org.omg.CORBA.MARSHAL (_id);
             } catch (org.omg.CORBA.portable.RemarshalException $rm) {
-                return movePTPJointAbsSeq (jointPointsSeq        );
+                return movePTPJointAbsSeq (jointPointsSeq, timeSeq        );
             } finally {
                 _releaseReply ($in);
             }

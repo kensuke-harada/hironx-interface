@@ -64,44 +64,44 @@ class TestHIROControllerIdlExample(unittest.TestCase):
         sample.armR_svc = [0,0,0,0,0,0]
         
     
-    def testSubTimeSeq(self):
-        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq)
-        a0 = map( (lambda v, l: v/l), [1]*23, self.example.uvlimit)
-        a1 = a0[:]
-        a1[2] = 3/self.example.uvlimit[2]
-        expected = [a0,a0,a1]
-        self.assertEqual(seq[0], a0)
-        self.assertEqual(seq[1], a0)
-        self.assertEqual(seq[2], a1)
-    
-    def testCalcTimeSeq(self):
-        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq)
-        seq = self.example._MotionCommands_i__calcTimeSeq(seq, 5.0, 0.5)
-        expected = [5.0, 0.005681410325502375, 0.005681410325502375, 0.006000444368534252]
-        for res,exp in zip(seq, expected):
-            self.assertEqual(res, exp)
-
-    def testSubTimeSeq2(self):
-        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq2)
-        for i, pose in enumerate(seq):
-            pose1 = self.jointSeq2[i]
-            pose2 = self.jointSeq2[i+1]
-            #print i
-            for j, zp in enumerate(zip(pose, pose1, pose2, self.example.uvlimit)):
-                sub, angle1, angle2, uvlimit = zp
-                suba = abs(angle2 - angle1)
-                #print j, sub*uvlimit, suba
-                self.assertEquals(sub, suba/uvlimit)
-
-    def testCalcTimeSeq2(self):
-        subSeq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq2)
-        ratio = 0.1
-        timeSeq = self.example._MotionCommands_i__calcTimeSeq(subSeq, 5.0, ratio)
-        self.assertEquals(timeSeq[0], 5.0)
-        for i, zp in enumerate(zip(timeSeq[1:], subSeq)):
-            time, sub = zp
-            #print i, time/ratio, max(sub)
-            self.assertEquals(time, max(sub)*ratio)
+#    def testSubTimeSeq(self):
+#        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq)
+#        a0 = map( (lambda v, l: v/l), [1]*23, self.example.uvlimit)
+#        a1 = a0[:]
+#        a1[2] = 3/self.example.uvlimit[2]
+#        expected = [a0,a0,a1]
+#        self.assertEqual(seq[0], a0)
+#        self.assertEqual(seq[1], a0)
+#        self.assertEqual(seq[2], a1)
+#    
+#    def testCalcTimeSeq(self):
+#        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq)
+#        seq = self.example._MotionCommands_i__calcTimeSeq(seq, 5.0, 0.5)
+#        expected = [5.0, 0.005681410325502375, 0.005681410325502375, 0.006000444368534252]
+#        for res,exp in zip(seq, expected):
+#            self.assertEqual(res, exp)
+#
+#    def testSubTimeSeq2(self):
+#        seq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq2)
+#        for i, pose in enumerate(seq):
+#            pose1 = self.jointSeq2[i]
+#            pose2 = self.jointSeq2[i+1]
+#            #print i
+#            for j, zp in enumerate(zip(pose, pose1, pose2, self.example.uvlimit)):
+#                sub, angle1, angle2, uvlimit = zp
+#                suba = abs(angle2 - angle1)
+#                #print j, sub*uvlimit, suba
+#                self.assertEquals(sub, suba/uvlimit)
+#
+#    def testCalcTimeSeq2(self):
+#        subSeq = self.example._MotionCommands_i__subTimeSeq(self.jointSeq2)
+#        ratio = 0.1
+#        timeSeq = self.example._MotionCommands_i__calcTimeSeq(subSeq, 5.0, ratio)
+#        self.assertEquals(timeSeq[0], 5.0)
+#        for i, zp in enumerate(zip(timeSeq[1:], subSeq)):
+#            time, sub = zp
+#            #print i, time/ratio, max(sub)
+#            self.assertEquals(time, max(sub)*ratio)
 
 #    # 現状、moveLinearCartesianRel 内で sample.armR_svc が AttributeError になるため
 #    # テストできない

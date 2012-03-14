@@ -3,7 +3,7 @@
 * MotionCommandsOperations.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2012年2月21日 18時51分43秒 JST
+* 2012年3月13日 10時27分39秒 JST
 */
 
 public interface MotionCommandsOperations 
@@ -20,7 +20,7 @@ public interface MotionCommandsOperations
   MotionCommandsPackage.RETURN_ID movePTPJointRel (double[] jointPoints);
 
   // ¢À©njobodyinfo.pyhXdegXM
-  MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq);
+  MotionCommandsPackage.RETURN_ID movePTPJointAbsSeq (double[][] jointPointsSeq, double[] timeSeq);
 
   // ¢À©njobodyinfo.pyhXdegXM
   MotionCommandsPackage.RETURN_ID openGripper ();

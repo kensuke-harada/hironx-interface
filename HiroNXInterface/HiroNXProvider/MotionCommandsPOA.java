@@ -3,7 +3,7 @@
 * MotionCommandsPOA.java .
 * IDL-to-Java コンパイラ (ポータブル), バージョン "3.1" で生成
 * 生成元: HIROController.idl
-* 2012年2月21日 18時51分43秒 JST
+* 2012年3月13日 10時27分39秒 JST
 */
 
 public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
@@ -109,8 +109,9 @@ public abstract class MotionCommandsPOA extends org.omg.PortableServer.Servant
        case 6:  // MotionCommands/movePTPJointAbsSeq
        {
          double jointPointsSeq[][] = MotionCommandsPackage.JointPosSeqHelper.read (in);
+         double timeSeq[] = MotionCommandsPackage.DoubleSeqHelper.read (in);
          MotionCommandsPackage.RETURN_ID $result = null;
-         $result = this.movePTPJointAbsSeq (jointPointsSeq);
+         $result = this.movePTPJointAbsSeq (jointPointsSeq, timeSeq);
          out = $rh.createReply();
          MotionCommandsPackage.RETURN_IDHelper.write (out, $result);
          break;

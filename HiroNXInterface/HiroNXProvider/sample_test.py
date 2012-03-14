@@ -11,18 +11,11 @@ try:
 except:
     pass
 
+import sample
+
 class TestSample(unittest.TestCase):
     def setUp(self):
         pass
-
-    def testSampleImport(self):
-        try:
-            import sample
-        except ImportError,ex:
-            print ex.__str__()
-            self.assertNotEquals(ex.__str__(), 'no module named rtm', 'sample.py の 「import rtm」の行を、\ntry:\n\timport rtm\nexcept ImportError:\n\tprint \'Import failure:rtm\'\nと修正してください')
-            self.assertNotEquals(ex.__str__(), 'no module named waitInput', 'sample.py の 「import waitInput」の行を、\ntry:\n\timport waitInput\nexcept ImportError:\n\tprint \'Import failure:waitInput\'\nと修正してください')
-            self.assertNotEquals(ex.__str__(), 'no module named OpenHRP', 'sample.py の 「import OpenHRP」の行を、\ntry:\n\timport OpenHRP\n\tfrom OpenHRP.RobotHardwareServicePackage import SwitchStatus\nexcept ImportError:\n\tprint \'Import failure:OpenHRP\'\nと修正してください')
     
     # setJointAnglesDeg2 の存在を確認
     def testSetJointAnglesDeg2(self):

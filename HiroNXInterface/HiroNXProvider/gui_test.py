@@ -20,7 +20,8 @@ class TestGui(unittest.TestCase):
     # hostname() の存在を確認
     def testHostname(self):
         self.assert_("hostname" in dir(gui), 'gui.py に hostname メソッドを追加してください。')
-        self.assertEquals(gui.hostname(), "localhost")
+        self.assertNotEquals(gui.hostname(), "hiro011", """hiro011 は初期設定値です。
+.robothost に適切なHIROホスト名を設定してください。""")
 
     def testReconnect(self):
         try:
@@ -31,7 +32,7 @@ class TestGui(unittest.TestCase):
 　　robotHost = hostname()
                 
 に修正してください。
-修正済にもかかわらずこのメッセージが出る場合は、testHostname のメッセージを確認してください。            """)
+修正済にもかかわらずこのメッセージが出る場合は、testHostname のメッセージを確認してください。""")
 
 if __name__ == '__main__':
     unittest.main()
