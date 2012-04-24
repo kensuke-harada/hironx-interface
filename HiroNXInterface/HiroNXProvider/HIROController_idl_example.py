@@ -167,8 +167,8 @@ class MotionCommands_i (MotionCommandsPOA):
     def movePTPJointAbs(self, jointPoints):
         try:
             print "movePTPJointAbs:", jointPoints
-            radPoints = map(lambda v: v, jointPoints)
-            degPoints = util.degFromRad(radPoints)
+            degPoints = map(lambda v: v, jointPoints)
+            #degPoints = util.degFromRad(radPoints)
             #print degPoints
             pose = self.__joints2pose(degPoints)
             time = self.time
