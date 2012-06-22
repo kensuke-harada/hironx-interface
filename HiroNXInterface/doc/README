@@ -1,0 +1,30 @@
+HiroNXInterface
+Version 1.0
+
+Introduction
+------------
+Please refer the documents in the doc/ directories. Currently, 
+we just prepared manuals in Japanese. 
+
+
+Distributed Contents
+--------------------
+
+HiroNXProvider/  -OpenRTM provider for controlling HiroNX
+
+HiroNXGUI/       -GUI interface for controlling HiroNX
+
+License
+-------
+
+LGPL ver.2
+
+Since the following files are supplied by General Robotix Inc., 
+the license of the following files follows the license defined 
+by General Robotix Inc.
+
+HiroNXProvider/
+   bodyinfo.py
+   gui.py
+   guiinfo.py
+   sample.py  
