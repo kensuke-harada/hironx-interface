@@ -368,7 +368,7 @@
 										<object class="wxScrolledWindow" name="m_body_joints_panel">
 											<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 											<object class="wxFlexGridSizer">
-												<rows>2</rows>
+												<rows>3</rows>
 												<cols>4</cols>
 												<vgap>0</vgap>
 												<hgap>0</hgap>
@@ -387,7 +387,7 @@
 													<object class="wxScrolledWindow" name="m_left_joints_panel">
 														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 														<object class="wxFlexGridSizer">
-															<rows>2</rows>
+															<rows>11</rows>
 															<cols>4</cols>
 															<vgap>0</vgap>
 															<hgap>0</hgap>
@@ -403,7 +403,7 @@
 													<object class="wxScrolledWindow" name="m_right_joints_panel">
 														<style>wxHSCROLL|wxSIMPLE_BORDER|wxVSCROLL</style>
 														<object class="wxFlexGridSizer">
-															<rows>2</rows>
+															<rows>11</rows>
 															<cols>4</cols>
 															<vgap>0</vgap>
 															<hgap>0</hgap>

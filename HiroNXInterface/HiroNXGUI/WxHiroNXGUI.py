@@ -194,7 +194,7 @@ class MyApp(wx.App):
         for code in joints:
             if code.find('---') == 0 and last_panel:
                 sizer = last_panel.Sizer
-                sizer.Rows = sizer.Rows + 1
+                #sizer.Rows = sizer.Rows + 1
                 for i in range(4):
                     line = wx.StaticText(last_panel, -1)
                     line.Label = ' '
